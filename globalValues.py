@@ -1,0 +1,1 @@
+blurThreshold = 110
