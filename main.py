@@ -3,7 +3,7 @@ import paramiko
 import picamera
 
 def copyOverSSH(src, dest):
-    key = paramiko.RSAKey(data=base64.b64decode(b'AAA...'))
+    key = paramiko.RSAKey(data=base64.b64decode(b'AAAAAAAA'))
     client = paramiko.SSHClient()
     user = "aditya"
     pswd = "aditya123*" 
