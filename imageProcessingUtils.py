@@ -15,3 +15,9 @@ def deNoise(img): #This is adding blur. doesnt look useful. Need to test more
 
 def loadImg(src):
     return cv2.imread(src, cv2.IMREAD_UNCHANGED)
+
+def cropFaceData(pictureDat, locationOfFace):
+    lof = locationOfFace
+    print(locationOfFace)
+    x, y, w, h = locationOfFace
+    return pictureDat[y : y+w, x : x+h]
