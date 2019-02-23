@@ -1,2 +1,2 @@
 blurThreshold = 110
-tmpDir = "tmp"
+tmpDir = "/home/pi/Assistentia/RaspberryPiCode/tmp/"
