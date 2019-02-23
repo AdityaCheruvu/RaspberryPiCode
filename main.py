@@ -6,6 +6,9 @@ import libraspimodule as LRM
 from globalValues import *
 import imageProcessingUtils as IPU
 import cv2
+from shutil import rmtree
+from time import sleep
+from PIL import Image, ImageFilter
 
 """def copyOverSSH(src, dest):
     key = paramiko.RSAKey(data=base64.b64decode(b'AAAAAAAA'))
@@ -23,17 +26,30 @@ import cv2
 
 if __name__ == "__main__":
         goodImg = False
-        LRM.removeTmpDir()
-        LRM.makeTmpDir()
-        iter = 1
-        while(not goodImg and iter <= 5):
-                LRM.captureImg(tmpDir + "/" + str(iter) + ".jpg")
-                img = cv2.imread(tmpDir + "/" + str(iter) + ".jpg")
-                if(not IPU.checkBlur(img)):
+        rmtree(tmpDir)
+        LRM.makeTmpDir(tmpDir)
+        with picamera.PiCamera() as camera:
+            camera.resolution = (3280, 2464)
+            iter = 1
+            while(not goodImg and iter <= 5):
+                sleep(5)
+                #os.system("raspistill -o " + tmpDir + "/" + str(iter) + ".jpg")
+                camera.capture(tmpDir + "/" + str(iter) + ".jpg")
+                img = cv2.imread(tmpDir + "/" + str(iter) + ".jpg", cv2.IMREAD_COLOR)
+                if(IPU.checkBlur(img)):
+                        print(str(iter) + " blur is " + str(IPU.getBlurVal(img)))
                         goodImg = True
                 else:
-                        os.remove(tmpDir + "/" + str(iter) + ".jpg")
-                iter+=1
-        if not goodImg:
-                os.system('espeak "Failed to capture proper image"')
+                        print(str(iter) + " blur is " + str(IPU.getBlurVal(img)) + " rejected, trying to sharpen")
+                        image = Image.open(tmpDir + "/" + str(iter) + ".jpg")
+                        sharp_image = image.filter( ImageFilter. SHARPEN)
+                        sharp_image.save(tmpDir + "/" + str(iter) + ".jpg", 'JPEG')
+                        img = cv2.imread(tmpDir + "/" + str(iter) + ".jpg", cv2.IMREAD_COLOR)
+                        print(str(iter) + " blur is " + str(IPU.getBlurVal(img)) + " for sharper image")
+                        if(not IPU.checkBlur(img)):
+                            os.remove(tmpDir + "/" + str(iter) + ".jpg")
+                        iter+=1
+                del img
+        #if not goodImg:
+        #        os.system('espeak "Failed to capture proper image"')
         

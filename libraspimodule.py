@@ -7,10 +7,8 @@ def captureImg(name):
     camera.capture(str(name) + ".jpg")
 
 def removeTmpDir(dir):
-        try:
-                os.removedirs(dir)
-        except:
-                pass
+    os.removedirs(dir)
+                
 
 def makeTmpDir(dir):
         try:
