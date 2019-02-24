@@ -31,8 +31,8 @@ if __name__ == "__main__":
         with picamera.PiCamera() as camera:
             camera.resolution = (3280, 2464)
             iter = 1
-            while(not goodImg and iter <= 5):
-                sleep(5)
+            while(not goodImg and iter <= 2):
+                sleep(1)
                 #os.system("raspistill -o " + tmpDir + "/" + str(iter) + ".jpg")
                 camera.capture(tmpDir + "/" + str(iter) + ".jpg")
                 img = cv2.imread(tmpDir + "/" + str(iter) + ".jpg", cv2.IMREAD_COLOR)
