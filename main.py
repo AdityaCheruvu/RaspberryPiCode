@@ -46,8 +46,8 @@ if __name__ == "__main__":
                         sharp_image.save(tmpDir + "/" + str(iter) + ".jpg", 'JPEG')
                         img = cv2.imread(tmpDir + "/" + str(iter) + ".jpg", cv2.IMREAD_COLOR)
                         print(str(iter) + " blur is " + str(IPU.getBlurVal(img)) + " for sharper image")
-                        if(not IPU.checkBlur(img)):
-                            os.remove(tmpDir + "/" + str(iter) + ".jpg")
+                        #if(not IPU.checkBlur(img)):
+                        #    os.remove(tmpDir + "/" + str(iter) + ".jpg")
                         iter+=1
                 del img
         #if not goodImg:
